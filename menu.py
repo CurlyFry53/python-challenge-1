@@ -52,7 +52,7 @@ menu = {
 
 # 1. Set up order list. Order list will store a list of dictionaries for
 # menu item name, item price, and quantity ordered
-
+order = []
 
 # Launch the store and present a greeting to the customer
 print("Welcome to the variety food truck.")
@@ -118,32 +118,41 @@ while place_order:
                     }
                     i += 1
             # 2. Ask customer to input menu item number
-
+            item_number = input("Enter the menu item to add it to the order: ")
 
             # 3. Check if the customer typed a number
-
+            if item_number.isdigit():
+                
                 # Convert the menu selection to an integer
-
+                item_number = int(item_number)
 
                 # 4. Check if the menu selection is in the menu items
-
+                if item_number-1<len(menu_items):
                     # Store the item name as a variable
-
+                    item_name = menu_items[item_number]["Item name"]
+                    print(item_name)
 
                     # Ask the customer for the quantity of the menu item
-
-
+                    # quantity = input("")
+                    quantity = input("Enter the quantity of {item_name} you want: ")
+                    
                     # Check if the quantity is a number, default to 1 if not
-
+                    if quantity.isdigit() == False:
+                        quantity = 1
 
                     # Add the item name, price, and quantity to the order list
+                    order.append({
+                        'Item name':item_name,
+                        'Price' : menu_items[item_number]["Price"],
+                        'Quantity' : quantity
+                    })
 
-
+                else:
                     # Tell the customer that their input isn't valid
+                    print("Input is not valid")
 
-
-                # Tell the customer they didn't select a menu option
-
+                    # Tell the customer they didn't select a menu option
+                    print("You did not select a menu option")
         else:
             # Tell the customer they didn't select a menu option
             print(f"{menu_category} was not a menu option.")
@@ -156,20 +165,24 @@ while place_order:
         keep_ordering = input("Would you like to keep ordering? (Y)es or (N)o ")
 
         # 5. Check the customer's input
-
+        match keep_ordering.lower():
+            case 'y':
                 # Keep ordering
-
+                place_order = True
                 # Exit the keep ordering question loop
-
+                break
+            
+            case 'n':
                 # Complete the order
-
+                place_order = False
                 # Since the customer decided to stop ordering, thank them for
                 # their order
-
+                print("Thank you for your order!")
                 # Exit the keep ordering question loop
-
-
+                break
+            case _:
                 # Tell the customer to try again
+                print("Unable to read input, try again")
 
 
 # Print out the customer's order
